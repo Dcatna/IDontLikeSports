@@ -25,7 +25,7 @@ for dataSet in json_object['data']:
     
 #print(json_object['data'][0]['id'])
 print()
-print(type(json_object))
+print(json_object['data'])
 print()
 print(data)
 
