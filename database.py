@@ -26,20 +26,17 @@ class dataInsertion():
     
     #adds given event to the Event Table
     def addToEventTable(id, sports):
-        insertSStatement = "INSERT INTO SportsTablee (sport_name, commence_time, odds_one, odds_two, teams1, teams2, site) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+        #HAVE TO FIX THE IGNORE
+        insertSStatement = "INSERT IGNORE INTO SportsTablee (sport_name, commence_time, odds_one, odds_two, teams1, teams2, site) VALUES(%s, %s, %s, %s, %s, %s, %s)"
 
         #commits all the info to the database
         myCurser.executemany(insertSStatement, sports)
         myDB.commit()
     
 
-
 test = dataInsertion()
-#odd= ([-130, 120])
-#teams = (["jac", "dolp"])
-#events = [("ass", "JERK")]
+
 sportsTable = [("ass", "1111111", -120, 120, "beng", "jags", "JERK")]
-#test.addToEventTable(sportsTable)
 
 #myCurser.execute("DESCRIBE SportsTable")
 myCurser.execute("SELECT * FROM SportsTablee")
