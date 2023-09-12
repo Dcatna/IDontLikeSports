@@ -14,12 +14,16 @@ myCurser = myDB.cursor()
 "FOREIGN KEY(sport_name) REFERENCES Events(sport_nice)"
 #
 
-table1 = "CREATE TABLE EventsTest (id int PRIMARY KEY AUTO_INCREMENT, sport_nice VARCHAR(50) NOT NULL)"
+#table1 = "CREATE TABLE EventsTest (sport_nice VARCHAR(50) PRIMARY KEY NOT NULL)"
 #myCurser.execute(table1)
 
 #NEED TO MAKE PRIMARY KEY THE ID OF THE MATCH
-table2 = "CREATE TABLE SportsTest2 (sport_id int PRIMARY KEY, FOREIGN KEY(sport_id) REFERENCES EventsTest(id), sport_name VARCHAR(50) NOT NULL, sport_id VARCHAR(50) NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams1 VARCHAR(50) NOT NULL, teams2 VARCHAR(50), site VARCHAR(50) NOT NULL)"
+#table2 = "CREATE TABLE SportsTest3 (sport_nice VARCHAR(50) PRIMARY KEY NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams1 VARCHAR(50) NOT NULL, teams2 VARCHAR(50), site VARCHAR(50) NOT NULL, FOREIGN KEY(sport_nice) REFERENCES EventsTest(sport_nice))"
 #myCurser.execute(table2)
+
+
+realTableHopefully = "CREATE TABLE SportsInfo (id int PRIMARY KEY AUTO_INCREMENT, sport_nice VARCHAR(50) NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams_one VARCHAR(50) NOT NULL, teams_two VARCHAR(50) NOT NULL, site VARCHAR(50) NOT NULL)"
+#myCurser.execute(realTableHopefully)
 
 class dataInsertion():
     #Returns all events from Event Table
@@ -27,34 +31,25 @@ class dataInsertion():
         return myCurser.execute("SELECT * FROM SportsTablee")
 
     #Returns the Event of a given sport name
-    def getEventTableForSport(sport_nice):
-        return myCurser.execute("SELECT * FROM SportsTablee WHERE sport_nice = $sport_nice")
+    def getEventTableForSport(idek, sport_nice):
+        return myCurser.execute("SELECT * FROM SportsTablee WHERE sport_nice = '%s'" , sport_nice)
     
     def testInsertion(thing, eventsPlug, SportsPlug):
         sata = "INSERT INTO EventsTest (sport_nice) VALUES(%s)"
         #print(eventsPlug)
-        myCurser.executemany(sata, eventsPlug)
+        #myCurser.executemany(sata, eventsPlug)
 
-        myCurser.executemany("INSERT INTO SportsTest2 (sport_name, sport_id, commence_time, odds_one, odds_two, teams1, teams2, site) VALUES(%s, %s,%s, %s, %s, %s, %s, %s)", SportsPlug)
-        myDB.commit()
-    
-    #adds given event to the Event Table
-    def addToEventTable(id, sports):
-        #HAVE TO FIX THE IGNORE
-        insertSStatement = "INSERT IGNORE INTO SportsTablee (sport_name, commence_time, odds_one, odds_two, teams1, teams2, site) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-
-        #commits all the info to the database
-        myCurser.executemany(insertSStatement, sports)
+        myCurser.executemany("INSERT INTO SportsInfo (sport_nice, commence_time, odds_one, odds_two, teams_one, teams_two, site) VALUES(%s, %s, %s, %s, %s, %s, %s)", SportsPlug)
         myDB.commit()
     
 
 test = dataInsertion()
-sporttist = [('ass', )]
-sportsTable = [("ass", "@#$^&*FGHJK", "1111111", -120, 120, "beng", "jags", "JERK")]
+sporttist = [('assss', )]
+sportsTable = [("assss", "1111111", -120, 120, "beng", "jags", "JERK")]
 
 #test.testInsertion(sporttist, sportsTable)
 #myCurser.execute("DESCRIBE SportsTable")
-myCurser.execute("SELECT * FROM SportsTest2")
+myCurser.execute("SELECT * FROM SportsInfo WHERE sport_nice = 'NFL'")
 for x in myCurser:
     print(x)
 #print(myCurser.fetchall())

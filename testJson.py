@@ -36,8 +36,8 @@ for info in data.keys():
     temp = data[info] 
     #print((tuple(temp[0]), temp[2], temp[1][0], temp[1][1], info[0], info[1], "FanDuel"))
     sportName = [(temp[0])]
-    sportTable = [(temp[0], temp[1], temp[3], temp[2][0], temp[2][1], info[0], info[1], "FanDuel")]
-    dataInserter.testInsertion(sportName, sportTable)
+    sportTable = [(temp[0], temp[3], temp[2][0], temp[2][1], info[0], info[1], "FanDuel")]
+    #dataInserter.testInsertion(sportName, sportTable)
 
 
 print()
