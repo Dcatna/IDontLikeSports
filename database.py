@@ -22,17 +22,23 @@ realTableHopefully = "CREATE TABLE SportsInfo (id int PRIMARY KEY AUTO_INCREMENT
 
 class DataInsertion():
     #Returns all events from Event Table
-    def getAllEventTable():
-        return myCurser.execute("SELECT * FROM SportsTablee")
+    def getAllEventTable(self):
+        myCurser.execute("SELECT * FROM SportsInfo")
+        return myCurser.fetchall()
 
     #Returns the Event of a given sport name
-    def getEventTableForSport(idek, sport_nice):
+    def getEventTableForSport(self, sport_nice):
         myCurser.execute("SELECT * FROM SportsInfo WHERE sport_nice = (%s)" , sport_nice)
         return myCurser.fetchall()
     
-    def testInsertion(thing, SportsPlug):
+    def testInsertion(self, SportsPlug):
         myCurser.executemany("INSERT INTO SportsInfo (sport_nice, commence_time, odds_one, odds_two, teams_one, teams_two, site) VALUES(%s, %s, %s, %s, %s, %s, %s)", SportsPlug)
         myDB.commit()
+
+    #gets odds and teams 
+    def getOddsTeams(self):
+        myCurser.execute("SELECT odds_one, odds_two, teams_one, teams_two FROM SportsInfo")
+        return myCurser.fetchall()
     
 
 test = DataInsertion()

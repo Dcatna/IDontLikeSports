@@ -5,11 +5,18 @@ with open('data.json', 'r') as openfile:
     # Reading from json file
     json_object = json.load(openfile)
 
+#print(json_object['data'])
+
 class MainCollection():
     data = {}
+    json_object
+    
+    def __init__(self, json_object):
+        self.json_object = json_object
 
-    def clearData(self):
+    def clearData(self, json_object):
         self.data = {}
+        
 
     #saves the desired data into the data dict
     def collectCurrentSportsInfo(self):
@@ -24,25 +31,28 @@ class MainCollection():
                 #COLLECTING WANTED VALUES
                 sport_name = dataSet['sport_nice']
                 teams = dataSet['teams']
-                odds = dataSet['sites'][0]['odds']['h2h']
-                time = dataSet['commence_time']
-                sites = dataSet['sites']
                 sport_id = dataSet['id']
 
-                #Getting rid of soccer for now
-                if(len(odds) >= 3):
-                    continue
-
-                newData[tuple(teams)] = tuple([sport_name, sport_id, odds, time, sites])
+                #should make so can get all the odds from all the sites
+                for site in dataSet['sites']['site_nice']:
+                    odds = dataSet['sites'][site]['odds']['h2h']
+                     #Getting rid of soccer for now
+                    if(len(odds) >= 3):
+                        continue
+                    time = dataSet['commence_time']
+                    newData[tuple(teams)] = tuple([sport_name, sport_id, odds, time, site])
+                
         #print(newData)
         self.data = newData
     
     #pushed to the DB !!!!!takes a list of tuples if u want just the tuple take out the exevutemany()
-    def pushToDatabase(idek, sportList):
+    def pushToDatabase(self, sportList):
+        dataInserdter = DataInsertion()
         dataInserdter.testInsertion(sportList)
     
     #gets the specific info from data into a list
     def getListOfInfo(self):
+        #list of all the possible sites the api can reach to accesss alllltheoddss
         returnLis = []
         for info in self.data.keys():
             temp = self.data[info] 
@@ -51,7 +61,7 @@ class MainCollection():
 
         return returnLis
 
-dataInserdter = DataInsertion()
+
 #PUTTING INFO INTO THE DATABASE
 
     #DataInserter.testInsertion(sportName, sportTable)
