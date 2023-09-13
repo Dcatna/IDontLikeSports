@@ -42,10 +42,10 @@ sportsTable = [("assss", "1111111", -120, 120, "beng", "jags", "JERK")]
 #test.testInsertion(sporttist, sportsTable)
 #myCurser.execute("DESCRIBE SportsTable")
 
-lis = test.getEventTableForSport(('WNBA', ))
+#lis = test.getEventTableForSport(('WNBA', ))
 
 #myCurser.execute("SELECT * FROM SportsInfo WHERE sport_nice = 'NFL'")
-for x in lis:
-    print(x)
+#for x in lis:
+ #   print(x)
 #print(myCurser.fetchall())
-print(myDB)
+#print(myDB)
