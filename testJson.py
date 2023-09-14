@@ -1,4 +1,5 @@
 import json
+import requests
 from database import DataInsertion
 
 with open('data.json', 'r') as openfile:
@@ -38,20 +39,18 @@ class MainCollection():
                 for sites in dataSet['sites']:
                     site = sites['site_nice']
                     odds = sites['odds']['h2h']
+                    time = dataSet['commence_time']
                      #Getting rid of soccer for now
                     if(len(odds) >= 3):
                         continue
-                    time = dataSet['commence_time']
 
                     #this is overwritign need to fix
                     if(tuple(teams) in newData):
-                        
-                        newData[tuple(teams)] += tuple([(sport_name, sport_id, odds, time, site)])
+                        newData[tuple(teams)] += [sport_name, sport_id, odds, time, site]
                     else:
-                        newData[tuple(teams)] = tuple([(sport_name, sport_id, odds, time, site)])
+                        newData[tuple(teams)] = [sport_name, sport_id, odds, time, site]
                 
         #print(newData)
-        print(newData)
         self.data = newData
     
     #pushed to the DB !!!!!takes a list of tuples if u want just the tuple take out the exevutemany()
@@ -63,8 +62,6 @@ class MainCollection():
     def getListOfInfo(self):
         #list of all the possible sites the api can reach to accesss alllltheoddss
         returnLis = []
-        print("hi")
-        print(self.data)
         for info in self.data.keys():
             temp = self.data[info] 
             #IMAFUCGINIDIOT
