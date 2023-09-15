@@ -9,18 +9,22 @@ myDB = mysql.connector.connect(
 )
 
 myCurser = myDB.cursor()
-#table1 = "CREATE TABLE EventsTest (sport_nice VARCHAR(50) PRIMARY KEY NOT NULL)"
-#myCurser.execute(table1)
-
-#NEED TO MAKE PRIMARY KEY THE ID OF THE MATCH
-#table2 = "CREATE TABLE SportsTest3 (sport_nice VARCHAR(50) PRIMARY KEY NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams1 VARCHAR(50) NOT NULL, teams2 VARCHAR(50), site VARCHAR(50) NOT NULL, FOREIGN KEY(sport_nice) REFERENCES EventsTest(sport_nice))"
-#myCurser.execute(table2)
-
-
-realTableHopefully = "CREATE TABLE SportsInfo (id int PRIMARY KEY AUTO_INCREMENT, sport_nice VARCHAR(50) NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams_one VARCHAR(50) NOT NULL, teams_two VARCHAR(50) NOT NULL, site VARCHAR(50) NOT NULL)"
+scoresTable = "CREATE TABLE ScoresTable(score_id int PRIMARY KEY AUTO_INCREMENT, score_one int NOT NULL, score_two int NOT NULL, team_one VARCHAR(50) NOT NULL, team_two VARCHAR(50) NOT NULL)"
+realTableHopefully = "CREATE TABLE SportsInfo(id int PRIMARY KEY AUTO_INCREMENT, sport_nice VARCHAR(50) NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams_one VARCHAR(50) NOT NULL, teams_two VARCHAR(50) NOT NULL, site VARCHAR(50) NOT NULL)"
 #myCurser.execute(realTableHopefully)
+#myCurser.execute(scoresTable)
 
 class DataInsertion():
+   #Returns all scores from the scorestable
+    def getAllScoretable(self):
+        myCurser.execute("SELECT * FROM ScoresTable")
+        return myCurser.fetchall()
+    
+    #inserts new info into scoretable
+    def insertScore(self, scoreInfo):
+        myCurser.executemany("INSERT INTO Scorestable (score_one, score_two, team_one, team_two) VALUES(%s, %s, %s, %s)", scoreInfo)
+        myDB.commit()
+
     #Returns all events from Event Table
     def getAllEventTable(self):
         myCurser.execute("SELECT * FROM SportsInfo")
@@ -47,7 +51,6 @@ sportsTable = [("assss", "1111111", -120, 120, "beng", "jags", "JERK")]
 
 #test.testInsertion(sporttist, sportsTable)
 #myCurser.execute("DESCRIBE SportsTable")
-
 #lis = test.getEventTableForSport(('WNBA', ))
 
 #myCurser.execute("SELECT * FROM SportsInfo WHERE sport_nice = 'NFL'")

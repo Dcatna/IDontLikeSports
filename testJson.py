@@ -10,7 +10,7 @@ with open('data.json', 'r') as openfile:
 
 class MainCollection():
     data = {}
-    json_object
+    json_object = {}
 
     def __init__(self, json_object):
         self.json_object = json_object
@@ -76,8 +76,10 @@ class MainCollection():
 #DataInserter.testInsertion(sportName, sportTable)
 
 test = MainCollection(json_object)
+print(json_object)
 temp1 = test.collectCurrentSportsInfo()
 temp = test.getListOfInfo()
+print(temp)
 #test.collectCurrentSportsInfo()
 
 print()

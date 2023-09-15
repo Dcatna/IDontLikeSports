@@ -64,7 +64,7 @@ if odds_response.status_code != 200:
 else:
     odds_json = odds_response.json()
     print('Number of events:', len(odds_json))
-    print(odds_json[""])
+    print(odds_json['data'])
 
     # Check the usage quota
     print('Remaining requests', odds_response.headers['x-requests-remaining'])
