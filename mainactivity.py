@@ -10,7 +10,7 @@ API_KEY = 'ba7e6e8faf2f023cea41e73e8089e9d0'
 
 
 # First get a list of in-season sports
-SPORT = 'upcoming' # use the sport_key from the /sports endpoint below, or use 'upcoming' to see the next 8 games across all sports
+SPORT = 'americanfootball_nfl' # use the sport_key from the /sports endpoint below, or use 'upcoming' to see the next 8 games across all sports
 
 REGIONS = 'us' # uk | us | eu | au. Multiple can be specified if comma delimited
 
@@ -20,11 +20,14 @@ ODDS_FORMAT = 'american' # decimal | american
 
 DATE_FORMAT = 'iso' # iso | unix
 
-sports_response = requests.get(
-    'https://api.the-odds-api.com/v4/sports', 
+scores_response = requests.get(
+    'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={apiKey}&dateFormat={dateFormat}', 
     params={
-        'api_key': API_KEY
+        'apiKey': API_KEY,
+        'sport' : SPORT,
+        'dateFormat' : DATE_FORMAT,
     }
+    
 )
 
 odds_response = requests.get(
@@ -41,6 +44,10 @@ odds_response = requests.get(
 
 
 odds_json = odds_response.json()
+#try:
+    #print(odds_json)
+#except:
+    #None
 #print(odds_json)
 
 
@@ -51,7 +58,7 @@ def pushInfoToDB(sport_json):
     collection.collectCurrentSportsInfo()
 
     listOfInfo = collection.getListOfInfo()
-    print(listOfInfo)
+    #print(listOfInfo)
     collection.pushToDatabase(listOfInfo)
 
 def pushScoresToDB(scores_json):
@@ -64,9 +71,12 @@ inserter = DataInsertion()
 
 x = myDB.cursor()
 x.execute("SELECT * FROM SportsInfo")
-for i in x.fetchall():
-    print(i)
 
+for i in x.fetchall():
+    try:
+        print(i)
+    except:
+        print(Exception )
 
 
 

@@ -41,6 +41,7 @@ class MainCollection():
                 for sites in dataSet['bookmakers']:
                     site = sites['title']
                     odds = []
+                    time = dataSet['commence_time']
                     for odd in sites['markets']:
                         #Getting rid of soccer for now
                         if(len(odds) >= 3):
@@ -50,14 +51,12 @@ class MainCollection():
                         odds = [odd1, odd2]
                         #odds += odd['outcomes']['price']
                         
-                    time = dataSet['commence_time']
-                     
 
-                    #this is overwritign need to fix
-                    if(tuple(teams) in newData):
-                        newData[tuple(teams)] += [sport_name, sport_id, odds, time, site]
-                    else:
-                        newData[tuple(teams)] = [sport_name, sport_id, odds, time, site]
+                        #this is overwritign need to fix
+                        if(tuple(teams) in newData):
+                            newData[tuple(teams)] += [(sport_name, sport_id, odds, time, site)]
+                        else:
+                            newData[tuple(teams)] = [(sport_name, sport_id, odds, time, site)]
                 
         #print(newData)
         self.data = newData
@@ -73,9 +72,14 @@ class MainCollection():
         returnLis = []
         for info in self.data.keys():
             temp = self.data[info] 
+            #print(temp)
             #IMAFUCGINIDIOT
-            sportTable = (temp[0], temp[3], temp[2][0], temp[2][1], info[0], info[1], temp[4])
-            returnLis.append(sportTable)
+            
+            for stats in temp:
+                #print(stats)
+                sportTable = (stats[0], stats[3], stats[2][0], stats[2][1], info[0], info[1], stats[4])
+            
+                returnLis.append(sportTable)
 
         return returnLis
 
