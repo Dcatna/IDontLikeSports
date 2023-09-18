@@ -2,9 +2,9 @@ import json
 import requests
 from database import DataInsertion
 
-with open('data.json', 'r') as openfile:
+#with open('data.json', 'r') as openfile:
     # Reading from json file
-    json_object = json.load(openfile)
+    #json_object = json.load(openfile)
 
 #print(json_object['data'])
 
@@ -22,27 +22,36 @@ class MainCollection():
     #saves the desired data into the data dict
     def collectCurrentSportsInfo(self):
         newData = {}
-        for dataSet in json_object['data']:
+        for dataSet in self.json_object:
             
-            if(dataSet["sites"] == []):
+            if(dataSet["bookmakers"] == []):
                 continue
-            elif(dataSet['sites'][0] == []):
+            elif(dataSet['bookmakers'][0] == []):
                 continue
             else:
                 #COLLECTING WANTED VALUES
-                sport_name = dataSet['sport_nice']
-                teams = dataSet['teams']
+                sport_name = dataSet['sport_title']
+                team1 = dataSet['home_team']
+                team2 = dataSet['away_team']
+                teams = [team1, team2]
                 sport_id = dataSet['id']
 
                 #should make so can get all the odds from all the sites
                 #print(dataSet['sites'][0]['site_nice'])
-                for sites in dataSet['sites']:
-                    site = sites['site_nice']
-                    odds = sites['odds']['h2h']
+                for sites in dataSet['bookmakers']:
+                    site = sites['title']
+                    odds = []
+                    for odd in sites['markets']:
+                        #Getting rid of soccer for now
+                        if(len(odds) >= 3):
+                            continue
+                        odd1 = odd['outcomes'][0]['price']
+                        odd2 = odd['outcomes'][1]['price']
+                        odds = [odd1, odd2]
+                        #odds += odd['outcomes']['price']
+                        
                     time = dataSet['commence_time']
-                     #Getting rid of soccer for now
-                    if(len(odds) >= 3):
-                        continue
+                     
 
                     #this is overwritign need to fix
                     if(tuple(teams) in newData):
@@ -75,11 +84,8 @@ class MainCollection():
 
 #DataInserter.testInsertion(sportName, sportTable)
 
-test = MainCollection(json_object)
-print(json_object)
-temp1 = test.collectCurrentSportsInfo()
-temp = test.getListOfInfo()
-print(temp)
+
+
 #test.collectCurrentSportsInfo()
 
 print()
