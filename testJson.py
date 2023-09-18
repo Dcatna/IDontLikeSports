@@ -11,9 +11,12 @@ from database import DataInsertion
 class MainCollection():
     data = {}
     json_object = {}
+    scores = {}
+    json_scores = {}
 
-    def __init__(self, json_object):
-        self.json_object = json_object
+    def __init__(self, json_object, json_scores):
+            self.json_object = json_object
+            self.json_scores = json_scores
 
     def clearData(self):
         self.data = {}
@@ -54,13 +57,46 @@ class MainCollection():
 
                         #this is overwritign need to fix
                         if(tuple(teams) in newData):
-                            newData[tuple(teams)] += [(sport_name, sport_id, odds, time, site)]
+                            newData[tuple(teams)] += [(sport_id, sport_name, sport_id, odds, time, site)]
                         else:
-                            newData[tuple(teams)] = [(sport_name, sport_id, odds, time, site)]
+                            newData[tuple(teams)] = [(sport_id, sport_name, sport_id, odds, time, site)]
                 
         #print(newData)
         self.data = newData
     
+    def collectScoresInfo(self):
+        #same idea as the other collector
+        newScores = {}
+        for scoreInfo in self.json_scores:
+            if(scoreInfo['completed'] == False):
+                continue
+            else:
+                sport_title = scoreInfo['sport_title']
+                game_id = scoreInfo['id']
+                team1 = scoreInfo['home_team']
+                team2 = scoreInfo['away_team']
+                commence_time = scoreInfo['commence_time']
+                team1_score = scoreInfo['scores'][1]['score']
+                team2_score = scoreInfo['scores'][0]['score']
+
+                newScores[game_id] = [sport_title, team1, team2, commence_time, team1_score, team2_score]
+        self.scores = newScores
+
+    def getListOfScores(self):
+        #yadada
+        returnLis = []
+
+        for score in self.scores.keys():
+            temp = self.scores[score]
+            scoreTable = (score, temp[3], temp[0], temp[4], temp[5], temp[1], temp[2])
+            returnLis.append(scoreTable)
+
+        return returnLis
+    
+    def pushScoresToDB(self, scoresList):
+        dataInserter = DataInsertion()
+        dataInserter.insertScore(scoresList)
+
     #pushed to the DB !!!!!takes a list of tuples if u want just the tuple take out the exevutemany()
     def pushToDatabase(self, sportList):
         dataInserdter = DataInsertion()

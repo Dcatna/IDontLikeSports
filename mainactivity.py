@@ -21,17 +21,21 @@ ODDS_FORMAT = 'american' # decimal | american
 DATE_FORMAT = 'iso' # iso | unix
 
 scores_response = requests.get(
-    'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={apiKey}&dateFormat={dateFormat}', 
+    f'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={API_KEY}&daysFrom={3}&dateFormat={DATE_FORMAT}', 
     params={
         'apiKey': API_KEY,
         'sport' : SPORT,
         'dateFormat' : DATE_FORMAT,
+        'daysFrom' : 3,
     }
     
 )
 
+scores_json = scores_response.json()
+#print(scores_json)
+
 odds_response = requests.get(
-    f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds',
+    f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds/?apiKey={API_KEY}&regions={REGIONS}&markets={MARKETS}',
     params={
         'api_key': API_KEY,
         'sport' : SPORT,
@@ -44,6 +48,8 @@ odds_response = requests.get(
 
 
 odds_json = odds_response.json()
+
+
 #try:
     #print(odds_json)
 #except:
@@ -62,15 +68,20 @@ def pushInfoToDB(sport_json):
     collection.pushToDatabase(listOfInfo)
 
 def pushScoresToDB(scores_json):
-    pass
+    collection = MainCollection({}, scores_json)
+
+    collection.collectScoresInfo()
+    listOfInfo = collection.getListOfScores()
+    print(listOfInfo)
+    collection.pushScoresToDB(listOfInfo)
     
-pushInfoToDB(odds_json)
- 
+#pushInfoToDB(odds_json)
+pushScoresToDB(scores_json)
 
 inserter = DataInsertion()
 
 x = myDB.cursor()
-x.execute("SELECT * FROM SportsInfo")
+x.execute("SELECT * FROM ScoreInfo")
 
 for i in x.fetchall():
     try:
