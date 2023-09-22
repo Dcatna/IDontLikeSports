@@ -57,9 +57,9 @@ class MainCollection():
 
                         #this is overwritign need to fix
                         if(tuple(teams) in newData):
-                            newData[tuple(teams)] += [(sport_id, sport_name, sport_id, odds, time, site)]
+                            newData[tuple(teams)] += [(sport_id, sport_name, odds, time, site)]
                         else:
-                            newData[tuple(teams)] = [(sport_id, sport_name, sport_id, odds, time, site)]
+                            newData[tuple(teams)] = [(sport_id, sport_name, odds, time, site)]
                 
         #print(newData)
         self.data = newData
@@ -104,11 +104,11 @@ class MainCollection():
     
     #gets the specific info from data into a list
     def getListOfInfo(self):
-        #list of all the possible sites the api can reach to accesss alllltheoddss
+        #DONEDITTLYDONR
         returnLis = []
         for info in self.data.keys():
             temp = self.data[info] 
-            #print(temp)
+            print(temp)
             #IMAFUCGINIDIOT
             
             for stats in temp:

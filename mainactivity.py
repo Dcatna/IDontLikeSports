@@ -3,11 +3,9 @@ import requests
 from testJson import MainCollection
 from database import DataInsertion
 from database import myDB
-
+import datetime
 # An api key is emailed to you when you sign up to a plan
 API_KEY = 'ba7e6e8faf2f023cea41e73e8089e9d0'
-
-
 
 # First get a list of in-season sports
 SPORT = 'americanfootball_nfl' # use the sport_key from the /sports endpoint below, or use 'upcoming' to see the next 8 games across all sports
@@ -48,7 +46,7 @@ odds_response = requests.get(
 
 
 odds_json = odds_response.json()
-
+#print(odds_json)
 
 #try:
     #print(odds_json)
@@ -59,7 +57,7 @@ odds_json = odds_response.json()
 
 def pushInfoToDB(sport_json):
         
-    collection = MainCollection(sport_json)
+    collection = MainCollection(sport_json, {})
 
     collection.collectCurrentSportsInfo()
 
@@ -72,11 +70,12 @@ def pushScoresToDB(scores_json):
 
     collection.collectScoresInfo()
     listOfInfo = collection.getListOfScores()
-    print(listOfInfo)
+    #print(listOfInfo)
     collection.pushScoresToDB(listOfInfo)
-    
-#pushInfoToDB(odds_json)
-pushScoresToDB(scores_json)
+
+
+pushInfoToDB(odds_json)
+#pushScoresToDB(scores_json)
 
 inserter = DataInsertion()
 
