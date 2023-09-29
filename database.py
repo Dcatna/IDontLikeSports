@@ -36,7 +36,7 @@ class DataInsertion():
         return myCurser.fetchall()
     
     def testInsertion(self, SportsPlug):
-        myCurser.executemany("INSERT INTO SportInfo (game_id, sport_nice, commence_time, odds_one, odds_two, teams_one, teams_two, site) VALUES(%s, %s, %s, %s, %s, %s, %s)", SportsPlug)
+        myCurser.executemany("INSERT INTO SportInfo (game_id, sport_nice, commence_time, odds_one, odds_two, teams_one, teams_two, site) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", SportsPlug)
         myDB.commit()
 
     #gets odds and teams for a specific game id

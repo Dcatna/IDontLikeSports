@@ -57,12 +57,29 @@ class MainCollection():
 
                         #this is overwritign need to fix
                         if(tuple(teams) in newData):
-                            newData[tuple(teams)] += [(sport_id, sport_name, odds, time, site)]
+                            newData[tuple(teams)] += [(sport_id, sport_name, odd1, odd2, time, site)]
                         else:
-                            newData[tuple(teams)] = [(sport_id, sport_name, odds, time, site)]
+                            newData[tuple(teams)] = [(sport_id, sport_name, odd1, odd2, time, site)]
                 
         #print(newData)
         self.data = newData
+
+     #gets the specific info from data into a list
+    def getListOfInfo(self):
+        #DONEDITTLYDONR
+        returnLis = []
+        for info in self.data.keys():
+            temp = self.data[info] 
+           # print(temp)
+            #IMAFUCGINIDIOT
+            
+            for stats in temp:
+                #print(stats)
+                sportTable = (stats[0], stats[1], stats[4], stats[2], stats[3], info[0], info[1], stats[5])
+            
+                returnLis.append(sportTable)
+
+        return returnLis
     
     def collectScoresInfo(self):
         #same idea as the other collector
@@ -102,22 +119,7 @@ class MainCollection():
         dataInserdter = DataInsertion()
         dataInserdter.testInsertion(sportList)
     
-    #gets the specific info from data into a list
-    def getListOfInfo(self):
-        #DONEDITTLYDONR
-        returnLis = []
-        for info in self.data.keys():
-            temp = self.data[info] 
-            print(temp)
-            #IMAFUCGINIDIOT
-            
-            for stats in temp:
-                #print(stats)
-                sportTable = (stats[0], stats[3], stats[2][0], stats[2][1], info[0], info[1], stats[4])
-            
-                returnLis.append(sportTable)
-
-        return returnLis
+   
 
 
 #PUTTING INFO INTO THE DATABASE
