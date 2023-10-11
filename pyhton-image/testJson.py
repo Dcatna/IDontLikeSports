@@ -57,9 +57,9 @@ class MainCollection():
 
                         #this is overwritign need to fix
                         if(tuple(teams) in newData):
-                            newData[tuple(teams)] += [(sport_id, sport_name, odd1, odd2, time, site)]
+                            newData[tuple(teams)] += [(sport_id + "_" + site, sport_name, odd1, odd2, time, site)]
                         else:
-                            newData[tuple(teams)] = [(sport_id, sport_name, odd1, odd2, time, site)]
+                            newData[tuple(teams)] = [(sport_id + "_" + site, sport_name, odd1, odd2, time, site)]
                 
         #print(newData)
         self.data = newData

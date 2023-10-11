@@ -1,9 +1,8 @@
-import json
+
 import requests
 from testJson import MainCollection
 from database import DataInsertion
-from database import myDB
-import datetime
+from database import BettingDatabase
 # An api key is emailed to you when you sign up to a plan
 API_KEY = 'ba7e6e8faf2f023cea41e73e8089e9d0'
 
@@ -75,12 +74,12 @@ def pushScoresToDB(scores_json):
 
 
 pushInfoToDB(odds_json)
-#pushScoresToDB(scores_json)
+pushScoresToDB(scores_json)
 
 inserter = DataInsertion()
 
-x = myDB.cursor()
-x.execute("SELECT * FROM ScoreInfo")
+x = BettingDatabase.cursor()
+x.execute("SELECT * FROM SportInfo")
 
 for i in x.fetchall():
     try:

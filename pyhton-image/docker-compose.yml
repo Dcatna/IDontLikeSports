@@ -1,0 +1,20 @@
+version: "3"
+services:
+    db:
+        container_name: mysql-db
+        image: mysql:5.7
+        ports:
+            - "3306:3306"
+            
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_DATABASE: 'db'
+
+    app:
+        container_name: goofy_ishizaka
+        links:
+            - "db"
+        build: ./
+        ports:
+            - "5001:5000"
+      
