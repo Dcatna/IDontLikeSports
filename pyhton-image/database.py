@@ -9,16 +9,26 @@ BettingDatabase = mysql.connector.connect(
     )
 print('mydb')
 myCurser = BettingDatabase.cursor()
-
+gameIDTable = "CREATE TABLE IF NOT EXISTS GameIDS (game_id VARCHAR(50) PRIMARY KEY NOT NULL, response TEXT NOT NULL, scores TEXT)"
 scoresTable = "CREATE TABLE IF NOT EXISTS ScoreInfos(game_id VARCHAR(100) PRIMARY KEY NOT NULL, commence_time VARCHAR(50) NOT NULL, sport_title VARCHAR(50) NOT NULL, score_one int NOT NULL, score_two int NOT NULL, team_one VARCHAR(50) NOT NULL, team_two VARCHAR(50) NOT NULL)"
 realTableHopefully = "CREATE TABLE IF NOT EXISTS SportInfos(game_id VARCHAR(100) PRIMARY KEY NOT NULL, sport_nice VARCHAR(50) NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams_one VARCHAR(50) NOT NULL, teams_two VARCHAR(50) NOT NULL, site VARCHAR(50) NOT NULL)"
 
 myCurser.execute(realTableHopefully)
 myCurser.execute(scoresTable)
+myCurser.execute(gameIDTable)
 
 class DataInsertion():
-   #Returns all scores from the scorestable
 
+    def pushGameID(self, game_id, response):
+        myCurser.execute("REPLACE INTO GameIDS (game_id, response) VALUES(%s, %s)", game_id, response)
+        BettingDatabase.commit()
+
+    #def updateGameIDS(self, game_id, scores):
+        #myCurser.executemany("UPDATE GamesIDS SET scores = %s WHERE game_id = %s", (scores, game_id))
+
+
+
+   #Returns all scores from the scorestable
     def getAllScoretable(self):
         myCurser.execute("SELECT * FROM ScoreInfo")
         return myCurser.fetchall()

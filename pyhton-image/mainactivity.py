@@ -73,13 +73,18 @@ def pushScoresToDB(scores_json):
     collection.pushScoresToDB(listOfInfo)
 
 
+def pushGameID(odds_json, scores_json):
+    collection = MainCollection(odds_json, scores_json)
+    collection.pushAll()
+
+
 pushInfoToDB(odds_json)
 pushScoresToDB(scores_json)
-
+pushGameID(odds_json, scores_json)
 inserter = DataInsertion()
 
 x = BettingDatabase.cursor()
-x.execute("SELECT * FROM SportInfo")
+x.execute("SELECT * FROM SportInfos")
 
 for i in x.fetchall():
     try:

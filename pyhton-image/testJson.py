@@ -21,6 +21,24 @@ class MainCollection():
     def clearData(self):
         self.data = {}
         
+    def pushAll(self):
+        inserter = DataInsertion()
+
+        for dataSet in self.json_object:
+            if(dataSet["bookmakers"] == []):
+                continue
+            elif(dataSet['bookmakers'][0] == []):
+                continue
+            else:
+                game_id = dataSet['id']
+                inserter.pushGameID(game_id, dataSet)
+        for scoreSet in self.json_scores:
+            if(scoreSet['completed'] == False):
+                continue
+            else:
+                game_id = scoreSet['id']
+                #inserter.updateGameIDS(game_id, scoreSet)
+
 
     #saves the desired data into the data dict
     def collectCurrentSportsInfo(self):
@@ -133,4 +151,3 @@ class MainCollection():
 print()
 #print(json_object['data'])
 print()
-#print(data)
