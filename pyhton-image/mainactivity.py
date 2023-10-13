@@ -1,5 +1,6 @@
 
 import requests
+import json
 from testJson import MainCollection
 from database import DataInsertion
 from database import BettingDatabase
@@ -78,19 +79,18 @@ def pushGameID(odds_json, scores_json):
     collection.pushAll()
 
 
-pushInfoToDB(odds_json)
-pushScoresToDB(scores_json)
+#pushInfoToDB(odds_json)
+#pushScoresToDB(scores_json)
 pushGameID(odds_json, scores_json)
 inserter = DataInsertion()
 
 x = BettingDatabase.cursor()
-x.execute("SELECT * FROM SportInfos")
+x.execute("SELECT * FROM GameIDs")
 
 for i in x.fetchall():
-    try:
-        print(i)
-    except:
-        print(Exception )
+    print(i)
+    
+    #print(json.loads(str(i)))
 
 
 

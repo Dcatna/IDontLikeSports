@@ -31,13 +31,15 @@ class MainCollection():
                 continue
             else:
                 game_id = dataSet['id']
+                
                 inserter.pushGameID(game_id, dataSet)
+
         for scoreSet in self.json_scores:
             if(scoreSet['completed'] == False):
                 continue
             else:
                 game_id = scoreSet['id']
-                #inserter.updateGameIDS(game_id, scoreSet)
+                inserter.updateGameIDS(game_id, scoreSet)
 
 
     #saves the desired data into the data dict
