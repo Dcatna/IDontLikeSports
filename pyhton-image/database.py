@@ -27,49 +27,19 @@ myCurser.execute(scoresTable)
 myCurser.execute(gameIDTable)
 
 class DataInsertion():
-
+    #pushes initial odds for game without score bc it hasnt played yet
     def pushGameID(self, game_id, response):
         myCurser.execute("REPLACE INTO GameIDs(game_id, response) VALUES(%s, %s)", (game_id, str(response)))
         BettingDatabase.commit()
 
-    def updateGameIDS(self, game_id, scores):
+    #pushes the scores to the game after played by game_id
+    def updateGameIDS(self, game_id, scores): #uhuh
         myCurser.execute("UPDATE GameIDs SET scores = %s WHERE game_id = %s", (str(scores), game_id))
 
-
-   #Returns all scores from the scorestable
-    def getAllScoretable(self):
-        myCurser.execute("SELECT * FROM ScoreInfo")
+    def getAllGames(self):
+        myCurser.execute("SELECT * FROM GameIDs")
         return myCurser.fetchall()
     
-    #inserts new info into scoretable
-    def insertScore(self, scoreInfo):
-        myCurser.executemany("REPLACE INTO ScoreInfos (game_id, commence_time, sport_title, score_one, score_two, team_one, team_two) VALUES(%s, %s, %s, %s, %s, %s, %s)", scoreInfo)
-        BettingDatabase.commit()
-
-    #Returns all events from Event Table
-    def getAllEventTable(self):
-        myCurser.execute("SELECT * FROM SportInfos")
-        return myCurser.fetchall()
-
-    #Returns the Event of a given sport name
-    def getEventTableForSport(self, sport_nice):
-        myCurser.execute("SELECT * FROM SportInfos WHERE sport_nice = (%s)" , sport_nice)
-        return myCurser.fetchall()
-    
-    def testInsertion(self, SportsPlug):
-        #replace removes dups
-        myCurser.executemany("REPLACE INTO SportInfos (game_id , sport_nice, commence_time, odds_one, odds_two, teams_one, teams_two, site) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", SportsPlug)
-        BettingDatabase.commit()
-
-    #gets odds and teams for a specific game id
-    def getOddsTeams(self, sport_id):
-        myCurser.execute("SELECT odds_one, odds_two, teams_one, teams_two FROM SportInfos WHERE sport_id = (%s)", sport_id)
-        return myCurser.fetchall()
-    
-
-test = DataInsertion()
-sporttist = [('assss', )]
-sportsTable = [("assss", "1111111", -120, 120, "beng", "jags", "JERK")]
 
 #test.testInsertion(sporttist, sportsTable)
 #myCurser.execute("DESCRIBE SportsTable")

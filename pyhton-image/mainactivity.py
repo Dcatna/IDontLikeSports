@@ -30,7 +30,7 @@ scores_response = requests.get(
 )
 
 scores_json = scores_response.json()
-#print(scores_json)
+print(scores_json)
 
 odds_response = requests.get(
     f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds/?apiKey={API_KEY}&regions={REGIONS}&markets={MARKETS}',
@@ -55,24 +55,6 @@ odds_json = odds_response.json()
 #print(odds_json)
 
 
-def pushInfoToDB(sport_json):
-        
-    collection = MainCollection(sport_json, {})
-
-    collection.collectCurrentSportsInfo()
-
-    listOfInfo = collection.getListOfInfo()
-    #print(listOfInfo)
-    collection.pushToDatabase(listOfInfo)
-
-def pushScoresToDB(scores_json):
-    collection = MainCollection({}, scores_json)
-
-    collection.collectScoresInfo()
-    listOfInfo = collection.getListOfScores()
-    #print(listOfInfo)
-    collection.pushScoresToDB(listOfInfo)
-
 
 def pushGameID(odds_json, scores_json):
     collection = MainCollection(odds_json, scores_json)
@@ -87,8 +69,7 @@ inserter = DataInsertion()
 x = BettingDatabase.cursor()
 x.execute("SELECT * FROM GameIDs")
 
-for i in x.fetchall():
-    print(i)
+#print(x.fetchone()[1])
     
     #print(json.loads(str(i)))
 
