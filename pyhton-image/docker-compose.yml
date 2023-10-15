@@ -1,12 +1,6 @@
 version: "3.9"
 services:
- 
-
   app:
-    container_name: goofy_ishizaka
     build: ./
-    #command: sh -c "sleep 3 && python mainactivity.py"
     ports:
-      - "5001:5000"
-
-
+      - "8080:8080"

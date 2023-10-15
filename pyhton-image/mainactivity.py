@@ -68,8 +68,7 @@ inserter = DataInsertion()
 
 x = BettingDatabase.cursor()
 x.execute("SELECT * FROM GameIDs")
-while(True):
-    print("hi")
+
 
 print(x.fetchone()[1])
     
