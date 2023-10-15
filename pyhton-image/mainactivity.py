@@ -5,7 +5,9 @@ from testJson import MainCollection
 from database import DataInsertion
 from database import BettingDatabase
 # An api key is emailed to you when you sign up to a plan
-API_KEY = 'ba7e6e8faf2f023cea41e73e8089e9d0'
+#my key 'ba7e6e8faf2f023cea41e73e8089e9d0'
+#ethans key 'e6d25e5095f904c5ed3a729152a5f57d'
+API_KEY = 'e6d25e5095f904c5ed3a729152a5f57d'
 
 # First get a list of in-season sports
 SPORT = 'americanfootball_nfl' # use the sport_key from the /sports endpoint below, or use 'upcoming' to see the next 8 games across all sports
@@ -63,6 +65,7 @@ def pushGameID(odds_json, scores_json):
 
 #pushInfoToDB(odds_json)
 #pushScoresToDB(scores_json)
+#print(odds_json)
 pushGameID(odds_json, scores_json)
 inserter = DataInsertion()
 
