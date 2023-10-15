@@ -2,11 +2,12 @@ import json
 import mysql.connector
 
 try: 
+    #USING RAILWAY
     BettingDatabase = mysql.connector.connect(
-            port = 3306,
-            host = "db",
-            password = "root",
-            database = "db"
+            port = 7251,
+            host = "containers-us-west-79.railway.app",
+            password = "sX2VL0chaYbedLKBW4Re",
+            database = "railway"
         )
     
     if(BettingDatabase.is_connected):
@@ -39,6 +40,7 @@ class DataInsertion():
     def getAllGames(self):
         myCurser.execute("SELECT * FROM GameIDs")
         return myCurser.fetchall()
+    
     
 
 #test.testInsertion(sporttist, sportsTable)

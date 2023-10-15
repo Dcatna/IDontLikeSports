@@ -30,7 +30,7 @@ scores_response = requests.get(
 )
 
 scores_json = scores_response.json()
-print(scores_json)
+#print(scores_json)
 
 odds_response = requests.get(
     f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds/?apiKey={API_KEY}&regions={REGIONS}&markets={MARKETS}',
@@ -68,8 +68,10 @@ inserter = DataInsertion()
 
 x = BettingDatabase.cursor()
 x.execute("SELECT * FROM GameIDs")
+while(True):
+    print("hi")
 
-#print(x.fetchone()[1])
+print(x.fetchone()[1])
     
     #print(json.loads(str(i)))
 

@@ -2,12 +2,6 @@ import json
 import requests
 from database import DataInsertion
 
-#with open('data.json', 'r') as openfile:
-    # Reading from json file
-    #json_object = json.load(openfile)
-
-#print(json_object['data'])
-
 class MainCollection():
     json_scores = {}
     json_object = {}
@@ -50,8 +44,13 @@ class MainCollection():
         for data in allData[1]:
             if(team1 in data and team2 in data):
                 for sites in data[1]['bookmakers']:
-                    team1Odds = sites['outcomes'][team1]
-                    team2Odds = sites['outcomes'][team2]
+                    if(sites['markets']['outcomes'][0]['name'] == team2):
+                        team2Odds = sites['markets']['outcomes'][0]['price']
+                        team1Odds = sites['markets']['outcomes'][1]['price']
+                    else:
+                        team1Odds = sites['markets']['outcomes'][0]['price']
+                        team2Odds = sites['markets']['outcomes'][1]['price']
+
                     teamOdds[team1] += team1Odds
                     teamOdds[team2] += team2Odds 
 
@@ -74,14 +73,10 @@ class MainCollection():
         return [team1Score, team2Score]
 
 
-#PUTTING INFO INTO THE DATABASE
+    #returning all the games whose odds are within a certain range
+    def getRangeOfOdds(self, range1, range2):
+        AllData = self.inserter.getAllGames()
+        returnList = {}
+        pass
 
-#DataInserter.testInsertion(sportName, sportTable)
 
-
-
-#test.collectCurrentSportsInfo()
-
-print()
-#print(json_object['data'])
-print()
