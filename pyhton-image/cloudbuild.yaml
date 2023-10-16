@@ -1,0 +1,15 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/lucky-coast-400516/pyhton-image-app', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/lucky-coast-400516/pyhton-image-app']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'your-cloud-run-service'
+      - '--image=gcr.io/lucky-coast-400516/pyhton-image-app'
+      - '--platform=managed'
+      - '--region=us-central1'
