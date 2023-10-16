@@ -13,11 +13,12 @@ try:
     
     if(BettingDatabase.is_connected):
         print("Succesful Connection")
+        
 
 except mysql.connector.Error as e:
     print(f"Error connecting to MySQL: {e}")
     
-
+print('hi')
 print('mydb')
 myCurser = BettingDatabase.cursor()
 gameIDTable = "CREATE TABLE IF NOT EXISTS GameIDs (game_id VARCHAR(50) PRIMARY KEY NOT NULL, response TEXT NOT NULL, scores TEXT)"

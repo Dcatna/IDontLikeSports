@@ -9,7 +9,7 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'your-cloud-run-service'
+      - 'betservice'
       - '--image=gcr.io/lucky-coast-400516/pyhton-image-app'
       - '--platform=managed'
       - '--region=us-central1'
