@@ -72,7 +72,6 @@ inserter = DataInsertion()
 x = BettingDatabase.cursor()
 x.execute("SELECT * FROM GameIDs")
 
-
 print(x.fetchone()[1])
     
     #print(json.loads(str(i)))
