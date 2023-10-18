@@ -10,6 +10,7 @@ steps:
       - 'run'
       - 'deploy'
       - 'betservice'
-      - '--image=gcr.io/lucky-coast-400516/pyhton-image-app'
+      - '--image=gcr.io/lucky-coast-400516/pyhton-image-app'  # Corrected image name
       - '--platform=managed'
       - '--region=us-central1'
+      - '--allow-unauthenticated'
