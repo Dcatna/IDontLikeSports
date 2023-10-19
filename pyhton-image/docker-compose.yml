@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    #command: sleep 3
+    #command: sh -c "sleep 3 && python mainactivity.py"
+    environment:
+      - PORT=8080  # Required for Cloud Run to dynamically set the port
+      - DB_HOST=containers-us-west-79.railway.app
+      - DB_PORT=7251
+      - DB_USER=root
+      - DB_PASSWORD=sX2VL0chaYbedLKBW4Re
+      - DB_DATABASE=railway
