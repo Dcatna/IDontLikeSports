@@ -10,8 +10,7 @@ import os
 app = Flask(__name__)
 
 
-if __name__ == '__main__':
-    app.run(debug = True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+
 @app.route('/')
 def trigger_function():
     # Here, you can call your main application logic
@@ -91,4 +90,5 @@ def trigger_function():
     return f'Operation completed successfully {res}!'
 
 
-    
+if __name__ == '__main__':
+    app.run(debug = True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
