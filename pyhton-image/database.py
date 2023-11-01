@@ -3,6 +3,7 @@ import mysql.connector
 
 try: 
     #USING RAILWAY
+    print("heloo")
     BettingDatabase = mysql.connector.connect(
             port = 7251,
             host = "containers-us-west-79.railway.app",

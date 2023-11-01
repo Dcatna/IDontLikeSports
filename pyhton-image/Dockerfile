@@ -12,4 +12,5 @@ EXPOSE 8080
 # Define environment variable
 # Note: The PORT environment variable is required for Google Cloud Run
 ENV PORT=8080
+EXPOSE 8080
 CMD ["python", "mainactivity.py"]
