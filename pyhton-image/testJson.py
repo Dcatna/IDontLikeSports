@@ -16,12 +16,11 @@ class MainCollection():
         
         #putting the game_id and the dic in the db
         for dataSet in self.json_object:
-            if(dataSet['bookmakers'] == []):
+            if(dataSet['sites'] == []):
                 continue
             else:
                 game_id = dataSet['id']
                 self.inserter.pushGameID(game_id, dataSet)
-            
             
     
 
@@ -31,6 +30,7 @@ class MainCollection():
             if(scoreSet['completed'] == False):
                 continue
             else:
+                print("hi")
                 game_id = scoreSet['id']
                 self.inserter.updateGameIDS(game_id, scoreSet)
 

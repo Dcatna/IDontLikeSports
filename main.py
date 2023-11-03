@@ -60,7 +60,7 @@ else:
     )
     with open("data.json", "w") as outfile:
         json.dump(odds_json, outfile)
-    print(odds_json['data'][0])
+    print(odds_json['data'])
 
     # Check your usage
     print()

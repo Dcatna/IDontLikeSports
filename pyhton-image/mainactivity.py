@@ -45,20 +45,20 @@ def trigger_function():
     scores_json = scores_response.json()
     #print(scores_json)
 
-    odds_response = requests.get(
-        f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds/?apiKey={API_KEY}&regions={REGIONS}&markets={MARKETS}',
-        params={
-            'api_key': API_KEY,
-            'sport' : SPORT,
-            'regions': REGIONS,
-            'markets': MARKETS,
-            'oddsFormat': ODDS_FORMAT,
-            'dateFormat': DATE_FORMAT,
-        }
-    )
+    odds_response = requests.get('https://api.the-odds-api.com/v3/odds', params= {
+    'api_key': API_KEY,
+    'sport': SPORT,
+    'region': 'us', # uk | us | eu | au
+    'mkt': 'h2h', # h2h | spreads | totals
+    "oddsFormat" : 'american', # decimal | american
+    'dateFormat': 'iso',  # iso | unix
+    
+})
 
 
     odds_json = odds_response.json()
+    odds_json = odds_json['data']
+    #print(odds_json["data"])
     #print(odds_json)
 
     #try:
@@ -72,6 +72,7 @@ def trigger_function():
     def pushGameID(odds_json, scores_json):
         collection = MainCollection(odds_json, scores_json)
         collection.pushAll()
+        collection.updateScores()
 
 
     #pushInfoToDB(odds_json)
@@ -82,8 +83,8 @@ def trigger_function():
 
     x = BettingDatabase.cursor()
     x.execute("SELECT * FROM GameIDs")
-
-    res = print(x.fetchone()[1])
+    print(x.fetchall())
+    res = []
         
         #print(json.loads(str(i)))
     
