@@ -1,24 +1,28 @@
 import json
 import mysql.connector
+from mysql.connector import Error
 
-try: 
-    #USING RAILWAY
-    print("heloo")
-    BettingDatabase = mysql.connector.connect(
-            port = 7251,
-            host = "containers-us-west-79.railway.app",
-            password = "sX2VL0chaYbedLKBW4Re",
-            database = "railway",
-            user = 'root'
-        )
-    
-    if(BettingDatabase.is_connected):
-        print("Succesful Connection")
-        
+def connect_to_db():
+    try: 
+        # USING RAILWAY
+        print("Connecting...")
+        BettingDatabase = mysql.connector.connect(
+                port = 7251,
+                host = "containers-us-west-79.railway.app",
+                password = "sX2VL0chaYbedLKBW4Re",
+                database = "railway",
+                user = 'root'
+            )
 
-except mysql.connector.Error as e:
-    print(f"Error connecting to MySQL: {e}")
-    
+        if BettingDatabase.is_connected():
+            print("Successful Connection")
+            return BettingDatabase, BettingDatabase.cursor(buffered=True)
+
+    except mysql.connector.Error as e:
+        print(f"Error connecting to MySQL: {e}")
+        return None, None
+
+BettingDatabase, myCurser = connect_to_db()
 
 
 myCurser = BettingDatabase.cursor(buffered=True)
@@ -52,14 +56,3 @@ class DataInsertion():
         myCurser.execute("SELECT * FROM GameIDs")
         return myCurser.fetchall()
     
-    
-
-#test.testInsertion(sporttist, sportsTable)
-#myCurser.execute("DESCRIBE SportsTable")
-#lis = test.getEventTableForSport(('WNBA', ))
-
-#myCurser.execute("SELECT * FROM SportsInfo WHERE sport_nice = 'NFL'")
-#for x in lis:
- #   print(x)
-#print(myCurser.fetchall())
-#print(myDB)
