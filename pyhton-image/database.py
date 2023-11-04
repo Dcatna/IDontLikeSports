@@ -7,9 +7,9 @@ def connect_to_db():
         # USING RAILWAY
         print("Connecting...")
         BettingDatabase = mysql.connector.connect(
-                port = 7251,
-                host = "containers-us-west-79.railway.app",
-                password = "sX2VL0chaYbedLKBW4Re",
+                port = 7892,
+                host = "containers-us-west-201.railway.app",
+                password = "afsTDjDtfErxDRlnCcVU",
                 database = "railway",
                 user = 'root'
             )
@@ -39,6 +39,7 @@ class DataInsertion():
     
     def pushGameID(self, game_id, response):
         myCurser.reset()
+        print("HELO")
         myCurser.execute("REPLACE INTO GameIDs(game_id, response) VALUES(%s, %s)", (game_id, str(response)))
         BettingDatabase.commit()
    
