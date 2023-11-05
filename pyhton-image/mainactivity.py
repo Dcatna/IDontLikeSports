@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def trigger_function():
     # Here, you can call your main application logic
         
@@ -93,3 +93,10 @@ def trigger_function():
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+
+#redeploy calls
+#docker build -t gcr.io/[PROJECT-ID]/[IMAGE-NAME]:[NEW-TAG] .
+#docker build -t gcr.io/lucky-coast-400516/pyhton-image-app:2 .
+
+#docker push gcr.io/[PROJECT-ID]/[IMAGE-NAME]:[NEW-TAG]
+#docker push gcr.io/lucky-coast-400516/pyhton-image-app:2
