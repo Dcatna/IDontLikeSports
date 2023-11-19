@@ -39,7 +39,6 @@ class DataInsertion():
     
     def pushGameID(self, game_id, response):
         myCurser.reset()
-        print("HELO")
         myCurser.execute("REPLACE INTO GameIDs(game_id, response) VALUES(%s, %s)", (game_id, str(response)))
         BettingDatabase.commit()
    

@@ -30,7 +30,6 @@ class MainCollection():
             if(scoreSet['completed'] == False):
                 continue
             else:
-                print("hi")
                 game_id = scoreSet['id']
                 self.inserter.updateGameIDS(game_id, scoreSet)
 
