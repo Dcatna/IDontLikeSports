@@ -22,7 +22,7 @@ def trigger_function():
 
     # First get a list of in-season sports
     SPORT = 'americanfootball_nfl' # use the sport_key from the /sports endpoint below, or use 'upcoming' to see the next 8 games across all sports
-
+    SPORT2 = 'basketball_nba'
     REGIONS = 'us' # uk | us | eu | au. Multiple can be specified if comma delimited
 
     MARKETS = 'h2h,spreads' # h2h | spreads | totals. Multiple can be specified if comma delimited
@@ -41,8 +41,18 @@ def trigger_function():
         }
         
     )
-
+    scores_response2 = requests.get(
+        f'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={API_KEY}&daysFrom={3}&dateFormat={DATE_FORMAT}', 
+        params={
+            'apiKey': API_KEY,
+            'sport' : SPORT2,
+            'dateFormat' : DATE_FORMAT,
+            'daysFrom' : 3,
+        }
+        
+    )
     scores_json = scores_response.json()
+    scores_json2 = scores_response2.json()
     #print(scores_json)
 
     odds_response = requests.get('https://api.the-odds-api.com/v3/odds', params= {
@@ -54,10 +64,20 @@ def trigger_function():
     'dateFormat': 'iso',  # iso | unix
     
 })
-
+    odds_response2 = requests.get('https://api.the-odds-api.com/v3/odds', params= {
+        'api_key': API_KEY,
+        'sport': SPORT2,
+        'region': 'us', # uk | us | eu | au
+        'mkt': 'h2h', # h2h | spreads | totals
+        "oddsFormat" : 'american', # decimal | american
+        'dateFormat': 'iso',  # iso | unix
+        
+    })
 
     odds_json = odds_response.json()
     odds_json = odds_json['data']
+    odds_json2 = odds_response2.json()
+    odds_json2 = odds_json2['data']
     #print(odds_json["data"])
     #print(odds_json)
 
@@ -79,6 +99,7 @@ def trigger_function():
     #pushScoresToDB(scores_json)
     #print(odds_json)
     pushGameID(odds_json, scores_json)
+    pushGameID(odds_json2, scores_json2)
     inserter = DataInsertion()
 
     x = BettingDatabase.cursor()

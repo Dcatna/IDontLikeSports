@@ -55,6 +55,8 @@ class CollectData():
                     high = odds[1]
                     
         return [low, high]
+    
+
 
 rah = CollectData()
 fd = rah.getOddsByName('Arizona Cardinals', 'Cleveland Browns')

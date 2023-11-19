@@ -30,7 +30,7 @@ else:
 
 # To get odds for a sepcific sport, use the sport key from the last request
 #   or set sport to "upcoming" to see live and upcoming across all sports
-sport_key = 'upcoming'
+sport_key = 'basketball_nba'
 
 odds_response = requests.get('https://api.the-odds-api.com/v3/odds', params= {
     'api_key': api_key,
