@@ -2,7 +2,7 @@ import json
 import requests
 
 # An api key is emailed to you when you sign up to a plan
-api_key = 'e6d25e5095f904c5ed3a729152a5f57d'
+api_key = 'dc8cc9a10b3cbbbb7cf28290a2b23c4e'
 
 
 # First get a list of in-season sports

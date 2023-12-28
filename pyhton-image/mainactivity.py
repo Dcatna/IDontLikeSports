@@ -18,7 +18,7 @@ def trigger_function():
     # An api key is emailed to you when you sign up to a plan
     #my key 'ba7e6e8faf2f023cea41e73e8089e9d0'
     #ethans key 'e6d25e5095f904c5ed3a729152a5f57d'
-    API_KEY = 'e6d25e5095f904c5ed3a729152a5f57d'
+    API_KEY = 'dc8cc9a10b3cbbbb7cf28290a2b23c4e'
 
     # First get a list of in-season sports
     SPORT = 'americanfootball_nfl' # use the sport_key from the /sports endpoint below, or use 'upcoming' to see the next 8 games across all sports
@@ -31,6 +31,7 @@ def trigger_function():
 
     DATE_FORMAT = 'iso' # iso | unix
 
+    
     scores_response = requests.get(
         f'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={API_KEY}&daysFrom={3}&dateFormat={DATE_FORMAT}', 
         params={
@@ -70,7 +71,8 @@ def trigger_function():
         'region': 'us', # uk | us | eu | au
         'mkt': 'h2h', # h2h | spreads | totals
         "oddsFormat" : 'american', # decimal | american
-        'dateFormat': 'iso',  # iso | unix
+        'dateFormat': 'iso',  # iso | unix,
+        'daysFrom' : 1,
         
     })
 
@@ -89,8 +91,8 @@ def trigger_function():
 
 
 
-    def pushGameID(odds_json, scores_json):
-        collection = MainCollection(odds_json, scores_json)
+    def pushGameID(odds_json, scores_json, player_json):
+        collection = MainCollection(odds_json, scores_json, player_json)
         collection.pushAll()
         collection.updateScores()
 
@@ -98,13 +100,42 @@ def trigger_function():
     #pushInfoToDB(odds_json)
     #pushScoresToDB(scores_json)
     #print(odds_json)
-    pushGameID(odds_json, scores_json)
-    pushGameID(odds_json2, scores_json2)
+    #pushGameID(odds_json, scores_json)
+    #print(odds_json2)
+    pushGameID(odds_json2, scores_json2, {})
     inserter = DataInsertion()
 
     x = BettingDatabase.cursor()
     x.execute("SELECT * FROM GameIDs")
-    print(x.fetchall())
+    result = x.fetchone()
+    #print(result)
+    
+
+
+    player_markets = ['player_points', 'player_rebounds', 'player_assists', 'player_threes', 'player_double_double', 'player_blocks', 'player_steals', 'player_points_rebounds_assists']
+    for market in player_markets:
+        for ids in result:
+            event_id = ids[0]
+            url = f'https://api.the-odds-api.com/v4/sports/{SPORT2}/events/{event_id}/odds'
+            params = {
+                'apiKey': API_KEY,
+                'regions': 'us',
+                'markets': market,
+                'dateFormat': 'iso',
+                'oddsFormat': 'american'
+            }
+            response = requests.get(url, params=params)
+        
+            if response.status_code == 200:
+                # Process the response
+                data = response.json()
+               # print(data)
+                #save by teams, commencetime, player/overunder ma 
+
+           # else:
+                # Handle errors
+                #print(f"Error: {response.status_code}")
+                #print(response.text)
     res = []
         
         #print(json.loads(str(i)))
