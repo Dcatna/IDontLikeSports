@@ -1,6 +1,8 @@
 import json
 import requests
 from database import DataInsertion
+from datetime import datetime
+import pytz
 
 class MainCollection():
     json_scores = {}
@@ -13,6 +15,22 @@ class MainCollection():
             self.json_object = json_object
             self.json_scores = json_scores
             self.json_players = json_players
+
+
+    def convert_utc_to_et(self, utc_time_str):
+        # Parse the UTC time string to a datetime object
+        utc_time = datetime.strptime(utc_time_str, '%Y-%m-%dT%H:%M:%SZ')
+
+        # Define the UTC timezone
+        utc = pytz.utc
+
+        # Define the Eastern Time timezone
+        eastern = pytz.timezone('America/New_York')
+
+        # Localize the UTC datetime and convert it to Eastern Time
+        eastern_time = utc.localize(utc_time).astimezone(eastern)
+        formatted_time = eastern_time.strftime("%Y-%m-%d %I:%M:%S %p %Z")
+        return formatted_time
 
 
     def pushAll(self):
@@ -32,7 +50,8 @@ class MainCollection():
             else:
                 game_id = dataSet['id']
                 teams = dataSet['teams']
-                time = dataSet['commence_time']
+                utc_time = dataSet['commence_time']
+                time = self.convert_utc_to_et(utc_time)
                 game_info = {
                 'game_id': game_id,
                 'teams': teams,
@@ -82,7 +101,8 @@ class MainCollection():
                 winTeamOne = 1 - winTeamTwo
            # print(winTeamOne, winTeamTwo)
            # print(bestoddwinsite + "             ", bestoddlosesite)
-            print((game_id, time,(teams[0], winTeamOne), (teams[1], winTeamTwo), (bestoddwinsite, bestoddlosesite)))
+            #print((game_id, time,(teams[0], winTeamOne), (teams[1], winTeamTwo), (bestoddwinsite, bestoddlosesite)))
+            self.inserter.pushPercents(game_id, time, teams[0], winTeamOne, teams[1], winTeamTwo, bestoddwinsite, bestoddlosesite)
             
 
     def updateScores(self):

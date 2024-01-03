@@ -106,9 +106,9 @@ def trigger_function():
     inserter = DataInsertion()
 
     x = BettingDatabase.cursor()
-    x.execute("SELECT * FROM GameIDs")
-    result = x.fetchone()
-    #print(result)
+    x.execute("SELECT * FROM GamePercents")
+    result = x.fetchall()
+    print(result)
     
 
 
