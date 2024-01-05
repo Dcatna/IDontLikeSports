@@ -29,11 +29,11 @@ myCurser = BettingDatabase.cursor(buffered=True)
 gameIDTable = "CREATE TABLE IF NOT EXISTS GameIDs (game_id VARCHAR(50) PRIMARY KEY NOT NULL, response TEXT NOT NULL, scores TEXT)"
 scoresTable = "CREATE TABLE IF NOT EXISTS ScoreInfos(game_id VARCHAR(100) PRIMARY KEY NOT NULL, commence_time VARCHAR(50) NOT NULL, sport_title VARCHAR(50) NOT NULL, score_one int NOT NULL, score_two int NOT NULL, team_one VARCHAR(50) NOT NULL, team_two VARCHAR(50) NOT NULL)"
 realTableHopefully = "CREATE TABLE IF NOT EXISTS SportInfos(game_id VARCHAR(100) PRIMARY KEY NOT NULL, sport_nice VARCHAR(50) NOT NULL, commence_time VARCHAR(50) NOT NULL, odds_one int NOT NULL, odds_two int NOT NULL, teams_one VARCHAR(50) NOT NULL, teams_two VARCHAR(50) NOT NULL, site VARCHAR(50) NOT NULL)"
-gamePercents = "CREATE TABLE IF NOT EXISTS GamePercents(game_id VARCHAR(100) PRIMARY KEY NOT NULL, time VARCHAR(50) NOT NULL, team1 VARCHAR(50) NOT NULL, team1percent VARCHAR(50) NOT NULL, team2 VARCHAR(50) NOT NULL, team2percent VARCHAR(50) NOT NULL, winsite VARCHAR(50) NOT NULL, losesite VARCHAR(50) NOT NULL)"
+gamePercents = "CREATE TABLE IF NOT EXISTS GamePercents(game_id VARCHAR(100) PRIMARY KEY NOT NULL, time VARCHAR(50) NOT NULL, team1 VARCHAR(50) NOT NULL, team1percent VARCHAR(50) NOT NULL, team2 VARCHAR(50) NOT NULL, team2percent VARCHAR(50) NOT NULL, winsite VARCHAR(50) NOT NULL, winodd VARCHAR(50) NOT NULL, losesite VARCHAR(50) NOT NULL, loseodd VARCHAR(50) NOT NULL)"
 myCurser.execute(gamePercents)
 myCurser.execute(scoresTable)
 myCurser.execute(gameIDTable)
-
+#myCurser.execute("DROP TABLE GamePercents")
 class DataInsertion():
     #pushes initial odds for game without score bc it hasnt played yet
     
@@ -49,9 +49,9 @@ class DataInsertion():
         myCurser.execute("UPDATE GameIDs SET scores = %s WHERE game_id = %s", (str(scores), game_id))
         BettingDatabase.commit()
         
-    def pushPercents(self, game_id, time, team1, team1percent, team2, team2percent, winsite, losesite):
+    def pushPercents(self, game_id, time, team1, team1percent, team2, team2percent, winsite, winodd, losesite, loseodd):
         myCurser.reset()
-        myCurser.execute("REPLACE INTO GamePercents(game_id, time, team1, team1percent, team2, team2percent, winsite, losesite) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", (game_id, time, team1, team1percent, team2, team2percent, winsite, losesite))
+        myCurser.execute("REPLACE INTO GamePercents(game_id, time, team1, team1percent, team2, team2percent, winsite, winodd, losesite, loseodd) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (game_id, time, team1, team1percent, team2, team2percent, winsite, winodd, losesite, loseodd))
         BettingDatabase.commit()
 
     def getAllGames(self):

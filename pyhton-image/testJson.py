@@ -44,7 +44,7 @@ class MainCollection():
             bestoddlose = -10000000000000
             bestoddlosesite = ""
             leftteam = False
-            #print(str(dataSet) + "\n")
+            print(str(dataSet) + "\n")
             if(dataSet['sites'] == []):
                 continue
             else:
@@ -80,7 +80,7 @@ class MainCollection():
                         if(int(odd[0]) > bestoddlose):
                             bestoddlose = int(odd[0])
                             bestoddlosesite = game_odds['site']
-                else:
+                else :
                     leftteam = True
                     sum += int(odd[1])
                     if(int(odd[0]) > bestoddwin):
@@ -101,8 +101,8 @@ class MainCollection():
                 winTeamOne = 1 - winTeamTwo
            # print(winTeamOne, winTeamTwo)
            # print(bestoddwinsite + "             ", bestoddlosesite)
-            #print((game_id, time,(teams[0], winTeamOne), (teams[1], winTeamTwo), (bestoddwinsite, bestoddlosesite)))
-            self.inserter.pushPercents(game_id, time, teams[0], winTeamOne, teams[1], winTeamTwo, bestoddwinsite, bestoddlosesite)
+            print((game_id, time,(teams[0], winTeamOne), (teams[1], winTeamTwo), (bestoddwinsite, bestoddwin, bestoddlosesite, bestoddlose)))
+            self.inserter.pushPercents(game_id, time, teams[0], winTeamOne, teams[1], winTeamTwo, bestoddwinsite, bestoddwin, bestoddlosesite, bestoddlose)
             
 
     def updateScores(self):

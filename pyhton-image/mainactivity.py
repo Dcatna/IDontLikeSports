@@ -17,8 +17,8 @@ def trigger_function():
         
     # An api key is emailed to you when you sign up to a plan
     #my key 'ba7e6e8faf2f023cea41e73e8089e9d0'
-    #ethans key 'e6d25e5095f904c5ed3a729152a5f57d'
-    API_KEY = 'dc8cc9a10b3cbbbb7cf28290a2b23c4e'
+    API_KEY = 'e6d25e5095f904c5ed3a729152a5f57d'
+    #API_KEY = 'dc8cc9a10b3cbbbb7cf28290a2b23c4e'
 
     # First get a list of in-season sports
     SPORT = 'americanfootball_nfl' # use the sport_key from the /sports endpoint below, or use 'upcoming' to see the next 8 games across all sports
@@ -76,9 +76,10 @@ def trigger_function():
         
     })
 
-    odds_json = odds_response.json()
-    odds_json = odds_json['data']
+    #odds_json = odds_response.json()
+    #odds_json = odds_json['data']
     odds_json2 = odds_response2.json()
+    #print(odds_json2)
     odds_json2 = odds_json2['data']
     #print(odds_json["data"])
     #print(odds_json)
