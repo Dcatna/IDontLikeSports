@@ -96,9 +96,11 @@ class MainCollection():
             if(leftteam == False):
                 winTeamOne = 100/(avg + 100)
                 winTeamTwo = 1 - winTeamOne
+                winTeamTwo, winTeamOne = (winTeamTwo * 100), (winTeamOne * 100)
             else:
                 winTeamTwo = 100/(avg + 100)
                 winTeamOne = 1 - winTeamTwo
+                winTeamTwo, winTeamOne = (winTeamTwo * 100), (winTeamOne * 100)
            # print(winTeamOne, winTeamTwo)
            # print(bestoddwinsite + "             ", bestoddlosesite)
             print((game_id, time,(teams[0], winTeamOne), (teams[1], winTeamTwo), (bestoddwinsite, bestoddwin, bestoddlosesite, bestoddlose)))
