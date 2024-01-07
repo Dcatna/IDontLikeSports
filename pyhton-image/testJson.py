@@ -1,5 +1,4 @@
-import json
-import requests
+
 from database import DataInsertion
 from datetime import datetime
 import pytz

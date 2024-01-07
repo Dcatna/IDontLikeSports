@@ -16,8 +16,8 @@ def trigger_function():
     # Here, you can call your main application logic
         
     # An api key is emailed to you when you sign up to a plan
-    #my key 'ba7e6e8faf2f023cea41e73e8089e9d0'
-    API_KEY = 'e6d25e5095f904c5ed3a729152a5f57d'
+    API_KEY = 'ba7e6e8faf2f023cea41e73e8089e9d0'
+    #API_KEY = 'e6d25e5095f904c5ed3a729152a5f57d'
     #API_KEY = 'dc8cc9a10b3cbbbb7cf28290a2b23c4e'
 
     # First get a list of in-season sports
@@ -32,39 +32,39 @@ def trigger_function():
     DATE_FORMAT = 'iso' # iso | unix
 
     
-    scores_response = requests.get(
-        f'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={API_KEY}&daysFrom={3}&dateFormat={DATE_FORMAT}', 
-        params={
-            'apiKey': API_KEY,
-            'sport' : SPORT,
-            'dateFormat' : DATE_FORMAT,
-            'daysFrom' : 3,
-        }
+    #scores_response = requests.get(
+    #    f'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={API_KEY}&daysFrom={3}&dateFormat={DATE_FORMAT}', 
+     #   params={
+      #      'apiKey': API_KEY,
+       #     'sport' : SPORT,
+        #    'dateFormat' : DATE_FORMAT,
+    #        'daysFrom' : 3,
+  #   #   }
         
-    )
-    scores_response2 = requests.get(
-        f'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={API_KEY}&daysFrom={3}&dateFormat={DATE_FORMAT}', 
-        params={
-            'apiKey': API_KEY,
-            'sport' : SPORT2,
-            'dateFormat' : DATE_FORMAT,
-            'daysFrom' : 3,
-        }
+    #)
+   # scores_response2 = requests.get(
+     #   f'https://api.the-odds-api.com/v4/sports/{SPORT}/scores/?apiKey={API_KEY}&daysFrom={3}&dateFormat={DATE_FORMAT}', 
+      #  params={
+       #     'apiKey': API_KEY,
+        #    'sport' : SPORT2,
+         #   'dateFormat' : DATE_FORMAT,
+          #  'daysFrom' : 3,
+      #  }
         
-    )
-    scores_json = scores_response.json()
-    scores_json2 = scores_response2.json()
+    #)
+   # scores_json = scores_response.json()
+   # scores_json2 = scores_response2.json()
     #print(scores_json)
 
-    odds_response = requests.get('https://api.the-odds-api.com/v3/odds', params= {
-    'api_key': API_KEY,
-    'sport': SPORT,
-    'region': 'us', # uk | us | eu | au
-    'mkt': 'h2h', # h2h | spreads | totals
-    "oddsFormat" : 'american', # decimal | american
-    'dateFormat': 'iso',  # iso | unix
+    #odds_response = requests.get('https://api.the-odds-api.com/v3/odds', params= {
+  #  'api_key': API_KEY,
+   # 'sport': SPORT,
+    #'region': 'us', # uk | us | eu | au
+    #'mkt': 'h2h', # h2h | spreads | totals
+    #"oddsFormat" : 'american', # decimal | american
+    #'dateFormat': 'iso',  # iso | unix
     
-})
+#})
     odds_response2 = requests.get('https://api.the-odds-api.com/v3/odds', params= {
         'api_key': API_KEY,
         'sport': SPORT2,
@@ -91,7 +91,7 @@ def trigger_function():
     #print(odds_json)
 
 
-
+    print('hi')
     def pushGameID(odds_json, scores_json, player_json):
         collection = MainCollection(odds_json, scores_json, player_json)
         collection.pushAll()
@@ -103,7 +103,7 @@ def trigger_function():
     #print(odds_json)
     #pushGameID(odds_json, scores_json)
     #print(odds_json2)
-    pushGameID(odds_json2, scores_json2, {})
+    pushGameID(odds_json2, {}, {})
     inserter = DataInsertion()
 
     x = BettingDatabase.cursor()
